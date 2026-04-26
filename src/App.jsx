@@ -114,8 +114,9 @@ export default function App() {
                     href="https://linkedin.com/in/gabe-einhorn-55b74822b"
                     target="_blank"
                     rel="noreferrer"
+                    aria-label="Gabe Einhorn on LinkedIn"
                   >
-                    LinkedIn ↗
+                    LinkedIn <span aria-hidden="true">↗</span>
                   </a>
                 </div>
               </div>
@@ -130,8 +131,9 @@ export default function App() {
                     href="https://linkedin.com/in/aiden-einhorn-370095292"
                     target="_blank"
                     rel="noreferrer"
+                    aria-label="Aiden Einhorn on LinkedIn"
                   >
-                    LinkedIn ↗
+                    LinkedIn <span aria-hidden="true">↗</span>
                   </a>
                 </div>
               </div>
@@ -159,6 +161,10 @@ export default function App() {
               </section>
             ))}
         </main>
+
+        <footer className="site-footer">
+          <p>&copy; {new Date().getFullYear()} VryfID Inc. All rights reserved.</p>
+        </footer>
       </div>
     </div>
   );
