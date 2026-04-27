@@ -77,9 +77,6 @@ export default function App() {
             </div>
 
             <p className="waitlist-note">
-              Next reveal at 5,000 signups. Referrers get it 48 hours early.
-            </p>
-            <p className="waitlist-note secondary">
               Launching in NYC, Atlanta, Nashville. Sign up wherever you are, we&apos;ll bring The Exchange to you.
             </p>
           </section>
