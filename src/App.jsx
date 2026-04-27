@@ -68,6 +68,19 @@ export default function App() {
 
         <main>
           <section className="hero">
+            <div className="supply-cards">
+              <div className="supply-card supply-card--light">
+                <span className="supply-label">Live Supply</span>
+                <span className="supply-number">25,000</span>
+                <span className="supply-city">units in NYC + NJ</span>
+              </div>
+              <div className="supply-card supply-card--dark">
+                <span className="supply-label">Live Supply</span>
+                <span className="supply-number">620</span>
+                <span className="supply-city">units in Atlanta</span>
+              </div>
+            </div>
+
             <div className="pill">Coming soon</div>
             <h1>
               Stop endlessly applying.
@@ -106,6 +119,15 @@ export default function App() {
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="Email address"
                     required
+                  />
+                </div>
+                <div className="field">
+                  <label htmlFor="waitlist-city">City</label>
+                  <input
+                    id="waitlist-city"
+                    type="text"
+                    name="city"
+                    placeholder="Where are you?"
                   />
                 </div>
                 <input type="hidden" name="source" value="vryfiexchange-landing" />

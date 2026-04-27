@@ -87,6 +87,65 @@ a {
   margin: 0 auto;
   padding: 84px 0 96px;
   text-align: center;
+  position: relative;
+}
+
+.supply-cards {
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  position: absolute;
+  top: 60px;
+  left: -140px;
+  right: -140px;
+}
+
+.supply-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 24px;
+  border-radius: 20px;
+  width: 200px;
+}
+
+.supply-card--light {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.06);
+}
+
+.supply-card--dark {
+  background: #171717;
+  color: white;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.16);
+}
+
+.supply-label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.supply-card--dark .supply-label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.supply-number {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.supply-city {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.supply-card--dark .supply-city {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .pill {
@@ -358,6 +417,10 @@ h1 {
   .glow {
     height: 320px;
     opacity: 0.6;
+  }
+
+  .supply-cards {
+    display: none;
   }
 }
 
