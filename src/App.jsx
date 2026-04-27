@@ -1,8 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect } from "react";
 
 const DEFAULT_REVEAL_STAGE = 1;
-const WAITLIST_WEBHOOK_URL =
-  "https://script.google.com/macros/s/AKfycbxAjv2yUNWVT9Zw_iHibnsPyo0T07MF92JEYEb9I9u_erzLLg02y3_diTJAUWDK5Gs7/exec";
 
 const revealSections = [
   {
@@ -31,28 +29,22 @@ const revealSections = [
 
 export default function App() {
   const revealStage = DEFAULT_REVEAL_STAGE;
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState("idle");
 
-  const helperText = useMemo(() => {
-    if (status === "success") return "You're on the list. We'll share the next reveal with you soon.";
-    if (status === "error") return "Something went wrong. Please try again in a moment.";
-    return "";
-  }, [status]);
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.css";
+    document.head.appendChild(link);
 
-  const handleSubmit = () => {
-    setIsSubmitting(true);
-    setStatus("idle");
+    const script = document.createElement("script");
+    script.src = "https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.js";
+    document.body.appendChild(script);
 
-    window.setTimeout(() => {
-      setStatus("success");
-      setIsSubmitting(false);
-      setName("");
-      setEmail("");
-    }, 500);
-  };
+    return () => {
+      document.head.removeChild(link);
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div className="page">
@@ -88,61 +80,16 @@ export default function App() {
             </h1>
             <p className="lead">First 1,000 renters get free access at launch.</p>
 
-            <iframe name="waitlist-capture" className="hidden-frame" title="Waitlist submission target" />
-            <form
-              onSubmit={handleSubmit}
-              action={WAITLIST_WEBHOOK_URL}
-              method="GET"
-              target="waitlist-capture"
-              className="waitlist-form"
-            >
-              <div className="waitlist-shell">
-                <div className="field">
-                  <label htmlFor="waitlist-name">Name</label>
-                  <input
-                    id="waitlist-name"
-                    type="text"
-                    name="name"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-                <div className="field">
-                  <label htmlFor="waitlist-email">Email</label>
-                  <input
-                    id="waitlist-email"
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    placeholder="Email address"
-                    required
-                  />
-                </div>
-                <div className="field">
-                  <label htmlFor="waitlist-city">City</label>
-                  <input
-                    id="waitlist-city"
-                    type="text"
-                    name="city"
-                    placeholder="Where are you?"
-                  />
-                </div>
-                <input type="hidden" name="source" value="vryfiexchange-landing" />
-                <button className="button" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Joining..." : "Stop chasing apartments. Start being found."}
-                </button>
-              </div>
-              {helperText ? (
-                <p className={`waitlist-note ${status === "error" ? "error" : ""}`}>{helperText}</p>
-              ) : null}
-              <div className="waitlist-meta">
-                <p>Next reveal at 5,000 signups. Referrers get it 48 hours early.</p>
-                <p>Launching in NYC, Atlanta, Nashville. Sign up wherever you are, we&apos;ll bring The Exchange to you.</p>
-              </div>
-            </form>
+            <div
+              id="getWaitlistContainer"
+              data-waitlist_id="32776"
+              data-widget_type="WIDGET_1"
+            />
+
+            <div className="waitlist-meta">
+              <p>Next reveal at 5,000 signups. Referrers get it 48 hours early.</p>
+              <p>Launching in NYC, Atlanta, Nashville. Sign up wherever you are, we&apos;ll bring The Exchange to you.</p>
+            </div>
           </section>
 
           <section className="founders">
