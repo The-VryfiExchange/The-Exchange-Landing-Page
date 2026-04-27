@@ -84,6 +84,7 @@ export default function App() {
               id="getWaitlistContainer"
               data-waitlist_id="32776"
               data-widget_type="WIDGET_1"
+              style={{ maxWidth: "500px", margin: "0 auto" }}
             />
 
             <div className="waitlist-meta">
