@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useMemo, useState } from "react";
 
 const DEFAULT_REVEAL_STAGE = 1;
+const WAITLIST_WEBHOOK_URL =
+  "https://script.google.com/macros/s/AKfycbxAjv2yUNWVT9Zw_iHibnsPyo0T07MF92JEYEb9I9u_erzLLg02y3_diTJAUWDK5Gs7/exec";
 
 const revealSections = [
   {
@@ -28,12 +30,29 @@ const revealSections = [
 ];
 
 export default function App() {
-  useEffect(() => {
-    if (window.beehiivConfig) return;
-    window.beehiivConfig = true;
-  }, []);
-
   const revealStage = DEFAULT_REVEAL_STAGE;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("idle");
+
+  const helperText = useMemo(() => {
+    if (status === "success") return "You're on the list. We'll share the next reveal with you soon.";
+    if (status === "error") return "Something went wrong. Please try again in a moment.";
+    return "";
+  }, [status]);
+
+  const handleSubmit = () => {
+    setIsSubmitting(true);
+    setStatus("idle");
+
+    window.setTimeout(() => {
+      setStatus("success");
+      setIsSubmitting(false);
+      setName("");
+      setEmail("");
+    }, 500);
+  };
 
   return (
     <div className="page">
@@ -56,29 +75,52 @@ export default function App() {
             </h1>
             <p className="lead">First 1,000 renters get verified free at launch.</p>
 
-            <div className="beehiiv-wrap">
-              <iframe
-                src="https://subscribe-forms.beehiiv.com/5f9eda7f-090e-4e67-9112-064933545092"
-                className="beehiiv-embed"
-                data-test-id="beehiiv-embed"
-                frameBorder="0"
-                scrolling="no"
-                title="Beehiiv signup form"
-                style={{
-                  width: "581px",
-                  height: "540px",
-                  margin: 0,
-                  borderRadius: "0px",
-                  backgroundColor: "transparent",
-                  boxShadow: "0 0 #0000",
-                  maxWidth: "100%",
-                }}
-              />
-            </div>
-
-            <p className="waitlist-note">
-              Launching in NYC, Atlanta, Nashville. Sign up wherever you are, we&apos;ll bring The Exchange to you.
-            </p>
+            <iframe name="waitlist-capture" className="hidden-frame" title="Waitlist submission target" />
+            <form
+              onSubmit={handleSubmit}
+              action={WAITLIST_WEBHOOK_URL}
+              method="GET"
+              target="waitlist-capture"
+              className="waitlist-form"
+            >
+              <div className="waitlist-shell">
+                <div className="field">
+                  <label htmlFor="waitlist-name">Name</label>
+                  <input
+                    id="waitlist-name"
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+                <div className="field">
+                  <label htmlFor="waitlist-email">Email</label>
+                  <input
+                    id="waitlist-email"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="Email address"
+                    required
+                  />
+                </div>
+                <input type="hidden" name="source" value="vryfiexchange-landing" />
+                <button className="button" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Joining..." : "Stop chasing apartments. Start being found."}
+                </button>
+              </div>
+              {helperText ? (
+                <p className={`waitlist-note ${status === "error" ? "error" : ""}`}>{helperText}</p>
+              ) : null}
+              <div className="waitlist-meta">
+                <p>Next reveal at 5,000 signups. Referrers get it 48 hours early.</p>
+                <p>Launching in NYC, Atlanta, Nashville. Sign up wherever you are, we&apos;ll bring The Exchange to you.</p>
+              </div>
+            </form>
           </section>
 
           <section className="founders">
@@ -111,9 +153,8 @@ export default function App() {
                     href="https://linkedin.com/in/gabe-einhorn-55b74822b"
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Gabe Einhorn on LinkedIn"
                   >
-                    LinkedIn <span aria-hidden="true">↗</span>
+                    LinkedIn ↗
                   </a>
                 </div>
               </div>
@@ -128,9 +169,8 @@ export default function App() {
                     href="https://linkedin.com/in/aiden-einhorn-370095292"
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Aiden Einhorn on LinkedIn"
                   >
-                    LinkedIn <span aria-hidden="true">↗</span>
+                    LinkedIn ↗
                   </a>
                 </div>
               </div>
@@ -143,11 +183,7 @@ export default function App() {
               <section
                 key={section.stage}
                 className={`reveal ${
-                  section.stage === 2
-                    ? "stage-2"
-                    : section.stage === 3
-                      ? "stage-3"
-                      : "stage-4"
+                  section.stage === 2 ? "stage-2" : section.stage === 3 ? "stage-3" : "stage-4"
                 }`}
               >
                 <p className={`eyebrow ${section.stage === 3 ? "mint" : section.stage === 4 ? "light" : ""}`}>
@@ -158,10 +194,6 @@ export default function App() {
               </section>
             ))}
         </main>
-
-        <footer className="site-footer">
-          <p>&copy; {new Date().getFullYear()} VryfID Inc. All rights reserved.</p>
-        </footer>
       </div>
     </div>
   );
