@@ -73,7 +73,7 @@ export default function App() {
               Stop endlessly applying.
               <span className="accent">Let the perfect home find you.</span>
             </h1>
-            <p className="lead">First 1,000 renters get verified free at launch.</p>
+            <p className="lead">First 1,000 renters get free access at launch.</p>
 
             <iframe name="waitlist-capture" className="hidden-frame" title="Waitlist submission target" />
             <form
