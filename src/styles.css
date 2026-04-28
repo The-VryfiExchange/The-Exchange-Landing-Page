@@ -173,6 +173,37 @@ h1 {
   color: var(--coral);
 }
 
+/* Rotating word animation */
+.rotating-word-wrapper {
+  display: inline;
+  position: relative;
+}
+
+.rotating-word {
+  display: inline;
+  text-decoration: none;
+  transition: none;
+}
+
+.rotating-word.struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.06em;
+  color: var(--muted);
+}
+
+.typing-cursor {
+  display: inline;
+  font-weight: 300;
+  animation: blink 0.6s step-end infinite;
+  color: var(--coral);
+  margin-left: -0.05em;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .lead {
   max-width: 620px;
   margin: 24px auto 0;

@@ -1,6 +1,53 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const DEFAULT_REVEAL_STAGE = 1;
+
+const ROTATING_WORDS = ["searching", "paying", "applying"];
+const TYPE_SPEED = 80;
+const PAUSE_AFTER_TYPE = 800;
+const STRIKE_DURATION = 600;
+const PAUSE_AFTER_STRIKE = 400;
+
+function useRotatingWord() {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [charCount, setCharCount] = useState(0);
+  const [phase, setPhase] = useState("typing"); // typing | pausing | striking | clearing
+  const timerRef = useRef(null);
+
+  const isLastWord = wordIndex === ROTATING_WORDS.length - 1;
+  const currentWord = ROTATING_WORDS[wordIndex];
+  const displayedText = currentWord.slice(0, charCount);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+  }, []);
+
+  useEffect(() => {
+    clear();
+
+    if (phase === "typing") {
+      if (charCount < currentWord.length) {
+        timerRef.current = setTimeout(() => setCharCount((c) => c + 1), TYPE_SPEED);
+      } else {
+        // Done typing this word
+        if (isLastWord) return; // stop — final word stays
+        timerRef.current = setTimeout(() => setPhase("pausing"), PAUSE_AFTER_TYPE);
+      }
+    } else if (phase === "pausing") {
+      timerRef.current = setTimeout(() => setPhase("striking"), 0);
+    } else if (phase === "striking") {
+      timerRef.current = setTimeout(() => setPhase("clearing"), STRIKE_DURATION + PAUSE_AFTER_STRIKE);
+    } else if (phase === "clearing") {
+      setCharCount(0);
+      setWordIndex((i) => i + 1);
+      setPhase("typing");
+    }
+
+    return clear;
+  }, [phase, charCount, currentWord, isLastWord, clear]);
+
+  return { displayedText, phase, isLastWord };
+}
 
 const revealSections = [
   {
@@ -26,6 +73,22 @@ const revealSections = [
       "Our AI agent matches renters to listings using income-to-rent fit, identity status, and actual renter preferences so the strongest connections happen earlier.",
   },
 ];
+
+function RotatingWord() {
+  const { displayedText, phase, isLastWord } = useRotatingWord();
+  const struck = phase === "striking" || (phase === "clearing");
+
+  return (
+    <span className="rotating-word-wrapper">
+      <span className={`rotating-word${struck ? " struck" : ""}${isLastWord && phase === "typing" && displayedText === "applying" ? " final" : ""}`}>
+        {displayedText}
+      </span>
+      {!(isLastWord && displayedText.length === ROTATING_WORDS[ROTATING_WORDS.length - 1].length) && (
+        <span className="typing-cursor">|</span>
+      )}
+    </span>
+  );
+}
 
 export default function App() {
   const revealStage = DEFAULT_REVEAL_STAGE;
@@ -75,7 +138,7 @@ export default function App() {
 
             <div className="pill">Coming soon</div>
             <h1>
-              Stop endlessly applying.
+              Stop endlessly <RotatingWord />.
               <span className="accent">Let the perfect home find you.</span>
             </h1>
             <p className="lead">First 1,000 renters get free access at launch.</p>
