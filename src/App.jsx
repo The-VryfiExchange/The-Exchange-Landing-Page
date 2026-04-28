@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 
 const DEFAULT_REVEAL_STAGE = 1;
 
-const ROTATING_WORDS = ["searching", "paying", "applying"];
+const ROTATING_WORDS = ["searching", "paying", "being rejected", "applying"];
 const TYPE_SPEED = 120;
 const PAUSE_AFTER_TYPE = 1000;
 const STRIKE_DURATION = 400;
