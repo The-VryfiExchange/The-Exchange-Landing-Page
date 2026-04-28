@@ -161,7 +161,7 @@ export default function App() {
 
             <div className="waitlist-meta">
               <p>Next reveal at 5,000 signups. Referrers get it 48 hours early.</p>
-              <p>Launching in NYC, Atlanta, Nashville. Sign up wherever you are, we&apos;ll bring The Exchange to you.</p>
+              <p>Launching in NYC, Atlanta, New Jersey. Sign up wherever you are, we&apos;ll bring The Exchange to you.</p>
             </div>
           </section>
 
