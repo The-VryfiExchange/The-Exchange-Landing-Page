@@ -3,10 +3,11 @@ import { useEffect, useState, useRef, useCallback } from "react";
 const DEFAULT_REVEAL_STAGE = 1;
 
 const ROTATING_WORDS = ["searching", "paying", "applying"];
-const TYPE_SPEED = 80;
-const PAUSE_AFTER_TYPE = 800;
-const STRIKE_DURATION = 600;
-const PAUSE_AFTER_STRIKE = 400;
+const TYPE_SPEED = 120;
+const PAUSE_AFTER_TYPE = 1000;
+const STRIKE_DURATION = 400;
+const PAUSE_AFTER_STRIKE = 200;
+const LOOP_DELAY = 5000;
 
 function useRotatingWord() {
   const [wordIndex, setWordIndex] = useState(0);
@@ -29,8 +30,15 @@ function useRotatingWord() {
       if (charCount < currentWord.length) {
         timerRef.current = setTimeout(() => setCharCount((c) => c + 1), TYPE_SPEED);
       } else {
-        // Done typing this word
-        if (isLastWord) return; // stop — final word stays
+        if (isLastWord) {
+          // After staying on "applying" for 5s, restart the whole cycle
+          timerRef.current = setTimeout(() => {
+            setCharCount(0);
+            setWordIndex(0);
+            setPhase("typing");
+          }, LOOP_DELAY);
+          return;
+        }
         timerRef.current = setTimeout(() => setPhase("pausing"), PAUSE_AFTER_TYPE);
       }
     } else if (phase === "pausing") {
@@ -138,7 +146,8 @@ export default function App() {
 
             <div className="pill">Coming soon</div>
             <h1>
-              Stop endlessly <RotatingWord />.
+              Stop endlessly
+              <span className="rotating-line"><RotatingWord />.</span>
               <span className="accent">Let the perfect home find you.</span>
             </h1>
             <p className="lead">First 1,000 renters get free access at launch.</p>
