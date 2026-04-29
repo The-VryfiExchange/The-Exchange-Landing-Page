@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
+import { usePostHog, PostHogCaptureOnViewed } from "@posthog/react";
 
 const DEFAULT_REVEAL_STAGE = 1;
 
@@ -100,6 +101,7 @@ function RotatingWord() {
 
 export default function App() {
   const revealStage = DEFAULT_REVEAL_STAGE;
+  const posthog = usePostHog();
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -117,6 +119,20 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    function handleWaitlistSuccess(event) {
+      posthog?.capture("waitlist_signup_completed", {
+        waitlist_id: "32776",
+        email: event.detail?.email,
+      });
+      if (event.detail?.email) {
+        posthog?.identify(event.detail.email, { email: event.detail.email });
+      }
+    }
+    document.addEventListener("getWaitlistSuccess", handleWaitlistSuccess);
+    return () => document.removeEventListener("getWaitlistSuccess", handleWaitlistSuccess);
+  }, [posthog]);
+
   return (
     <div className="page">
       <div className="glow" />
@@ -130,6 +146,7 @@ export default function App() {
         </header>
 
         <main>
+          <PostHogCaptureOnViewed name="hero_section_viewed" properties={{ section: "hero" }}>
           <section className="hero">
             <div className="supply-cards">
               <div className="supply-card supply-card--light">
@@ -164,6 +181,7 @@ export default function App() {
               <p>Launching in NYC, Atlanta, New Jersey. Sign up wherever you are, we&apos;ll bring The Exchange to you.</p>
             </div>
           </section>
+          </PostHogCaptureOnViewed>
 
           <section className="founders">
             <div className="eyebrow">Meet our founders</div>
@@ -195,6 +213,7 @@ export default function App() {
                     href="https://linkedin.com/in/gabe-einhorn-55b74822b"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => posthog?.capture("founder_linkedin_clicked", { founder_name: "Gabe Einhorn" })}
                   >
                     LinkedIn ↗
                   </a>
@@ -211,6 +230,7 @@ export default function App() {
                     href="https://linkedin.com/in/aiden-einhorn-370095292"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => posthog?.capture("founder_linkedin_clicked", { founder_name: "Aiden Einhorn" })}
                   >
                     LinkedIn ↗
                   </a>
