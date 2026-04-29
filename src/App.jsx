@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { usePostHog, PostHogCaptureOnViewed } from "@posthog/react";
 
 const DEFAULT_REVEAL_STAGE = 1;
 
@@ -101,9 +100,7 @@ function RotatingWord() {
 
 export default function App() {
   const revealStage = DEFAULT_REVEAL_STAGE;
-  const posthog = usePostHog();
 
-  // Load GetWaitlist widget
   useEffect(() => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
@@ -119,58 +116,6 @@ export default function App() {
       document.body.removeChild(script);
     };
   }, []);
-
-  // Track waitlist form submissions
-  useEffect(() => {
-    const container = document.getElementById("getWaitlistContainer");
-    if (!container) return;
-
-    const observer = new MutationObserver(() => {
-      const successEl = container.querySelector(".success-message, .gw-success, [class*='success']");
-      if (successEl) {
-        posthog?.capture("waitlist_form_submitted");
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(container, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, [posthog]);
-
-  // Track scroll depth milestones
-  useEffect(() => {
-    const milestones = [25, 50, 75, 100];
-    const reached = new Set();
-
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (scrollHeight <= 0) return;
-      const percent = Math.round((window.scrollY / scrollHeight) * 100);
-
-      for (const m of milestones) {
-        if (percent >= m && !reached.has(m)) {
-          reached.add(m);
-          posthog?.capture("scroll_depth_reached", { depth_percent: m });
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [posthog]);
-
-  // Track time on page
-  useEffect(() => {
-    const startTime = Date.now();
-
-    const handleLeave = () => {
-      const seconds = Math.round((Date.now() - startTime) / 1000);
-      posthog?.capture("time_on_page", { seconds_spent: seconds });
-    };
-
-    window.addEventListener("beforeunload", handleLeave);
-    return () => window.removeEventListener("beforeunload", handleLeave);
-  }, [posthog]);
 
   return (
     <div className="page">
@@ -207,14 +152,12 @@ export default function App() {
             </h1>
             <p className="lead">First 1,000 renters get free access at launch.</p>
 
-            <PostHogCaptureOnViewed name="waitlist_widget_viewed">
-              <div
-                id="getWaitlistContainer"
-                data-waitlist_id="32776"
-                data-widget_type="WIDGET_1"
-                style={{ maxWidth: "500px", margin: "0 auto" }}
-              />
-            </PostHogCaptureOnViewed>
+            <div
+              id="getWaitlistContainer"
+              data-waitlist_id="32776"
+              data-widget_type="WIDGET_1"
+              style={{ maxWidth: "500px", margin: "0 auto" }}
+            />
 
             <div className="waitlist-meta">
               <p>Next reveal at 5,000 signups. Referrers get it 48 hours early.</p>
@@ -252,7 +195,6 @@ export default function App() {
                     href="https://linkedin.com/in/gabe-einhorn-55b74822b"
                     target="_blank"
                     rel="noreferrer"
-                    onClick={() => posthog?.capture("founder_linkedin_clicked", { founder_name: "Gabe Einhorn" })}
                   >
                     LinkedIn ↗
                   </a>
@@ -269,7 +211,6 @@ export default function App() {
                     href="https://linkedin.com/in/aiden-einhorn-370095292"
                     target="_blank"
                     rel="noreferrer"
-                    onClick={() => posthog?.capture("founder_linkedin_clicked", { founder_name: "Aiden Einhorn" })}
                   >
                     LinkedIn ↗
                   </a>
@@ -281,23 +222,18 @@ export default function App() {
           {revealSections
             .filter((section) => revealStage >= section.stage)
             .map((section) => (
-              <PostHogCaptureOnViewed
+              <section
                 key={section.stage}
-                name="reveal_section_viewed"
-                properties={{ stage: section.stage, eyebrow: section.eyebrow }}
+                className={`reveal ${
+                  section.stage === 2 ? "stage-2" : section.stage === 3 ? "stage-3" : "stage-4"
+                }`}
               >
-                <section
-                  className={`reveal ${
-                    section.stage === 2 ? "stage-2" : section.stage === 3 ? "stage-3" : "stage-4"
-                  }`}
-                >
-                  <p className={`eyebrow ${section.stage === 3 ? "mint" : section.stage === 4 ? "light" : ""}`}>
-                    {section.eyebrow}
-                  </p>
-                  <h2>{section.title}</h2>
-                  <p>{section.copy}</p>
-                </section>
-              </PostHogCaptureOnViewed>
+                <p className={`eyebrow ${section.stage === 3 ? "mint" : section.stage === 4 ? "light" : ""}`}>
+                  {section.eyebrow}
+                </p>
+                <h2>{section.title}</h2>
+                <p>{section.copy}</p>
+              </section>
             ))}
         </main>
       </div>
