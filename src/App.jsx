@@ -123,7 +123,7 @@ export default function App() {
       }
       // Redirect to Vibes after a brief delay so the user sees the success state
       setTimeout(() => {
-        window.location.href = "https://vryfidvibes.com?ref=exchange";
+        window.location.href = "https://vibes-dusky.vercel.app?ref=exchange";
       }, 1500);
     }
     document.addEventListener("getWaitlistSuccess", handleWaitlistSuccess);
