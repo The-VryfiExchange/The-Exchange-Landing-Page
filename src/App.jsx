@@ -123,7 +123,7 @@ export default function App() {
         posthog?.identify(event.detail.email, { email: event.detail.email });
       }
       setTimeout(() => {
-        window.location.href = "https://vryfid-vibes.vercel.app?ref=exchange";
+        window.location.href = "https://vryfidvibes.com?ref=exchange";
       }, 1500);
     }
     document.addEventListener("getWaitlistSuccess", handleWaitlistSuccess);
@@ -136,7 +136,7 @@ export default function App() {
       if (text.toLowerCase().includes("you're on the list") || text.toLowerCase().includes("thank") || text.toLowerCase().includes("success")) {
         observer.disconnect();
         setTimeout(() => {
-          window.location.href = "https://vryfid-vibes.vercel.app?ref=exchange";
+          window.location.href = "https://vryfidvibes.com?ref=exchange";
         }, 2000);
       }
     });
