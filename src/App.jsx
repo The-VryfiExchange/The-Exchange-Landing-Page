@@ -121,6 +121,10 @@ export default function App() {
       if (event.detail?.email) {
         posthog?.identify(event.detail.email, { email: event.detail.email });
       }
+      // Redirect to Vibes after a brief delay so the user sees the success state
+      setTimeout(() => {
+        window.location.href = "https://vryfidvibes.com?ref=exchange";
+      }, 1500);
     }
     document.addEventListener("getWaitlistSuccess", handleWaitlistSuccess);
     return () => document.removeEventListener("getWaitlistSuccess", handleWaitlistSuccess);
