@@ -112,6 +112,7 @@ export default function App() {
     };
   }, []);
 
+  // Redirect to Vibes after waitlist signup — registered once, no deps
   useEffect(() => {
     function handleWaitlistSuccess(event) {
       posthog?.capture("waitlist_signup_completed", {
@@ -121,14 +122,31 @@ export default function App() {
       if (event.detail?.email) {
         posthog?.identify(event.detail.email, { email: event.detail.email });
       }
-      // Redirect to Vibes after a brief delay so the user sees the success state
       setTimeout(() => {
         window.location.href = "https://vibes-dusky.vercel.app?ref=exchange";
       }, 1500);
     }
     document.addEventListener("getWaitlistSuccess", handleWaitlistSuccess);
-    return () => document.removeEventListener("getWaitlistSuccess", handleWaitlistSuccess);
-  }, [posthog]);
+
+    // Fallback: watch for GetWaitlist success message in the DOM
+    const observer = new MutationObserver(() => {
+      const container = document.getElementById("getWaitlistContainer");
+      if (!container) return;
+      const text = container.innerText || "";
+      if (text.toLowerCase().includes("you're on the list") || text.toLowerCase().includes("thank") || text.toLowerCase().includes("success")) {
+        observer.disconnect();
+        setTimeout(() => {
+          window.location.href = "https://vibes-dusky.vercel.app?ref=exchange";
+        }, 2000);
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+
+    return () => {
+      document.removeEventListener("getWaitlistSuccess", handleWaitlistSuccess);
+      observer.disconnect();
+    };
+  }, []);
 
   const scrollToWaitlist = () => {
     document.getElementById("waitlist-section")?.scrollIntoView({ behavior: "smooth" });
