@@ -113,18 +113,26 @@ export default function App() {
   }, []);
 
   // Redirect to Vibes after waitlist signup — registered once, no deps
+  const signupEmailRef = useRef(null);
+
   useEffect(() => {
+    function redirectToVibes(email) {
+      const params = new URLSearchParams({ ref: "exchange" });
+      if (email) params.set("email", email);
+      window.location.href = `https://vryfidvibes.com?${params.toString()}`;
+    }
+
     function handleWaitlistSuccess(event) {
+      const email = event.detail?.email || "";
+      signupEmailRef.current = email;
       posthog?.capture("waitlist_signup_completed", {
         waitlist_id: "32776",
-        email: event.detail?.email,
+        email,
       });
-      if (event.detail?.email) {
-        posthog?.identify(event.detail.email, { email: event.detail.email });
+      if (email) {
+        posthog?.identify(email, { email });
       }
-      setTimeout(() => {
-        window.location.href = "https://vryfidvibes.com?ref=exchange";
-      }, 1500);
+      setTimeout(() => redirectToVibes(email), 1500);
     }
     document.addEventListener("getWaitlistSuccess", handleWaitlistSuccess);
 
@@ -135,9 +143,10 @@ export default function App() {
       const text = container.innerText || "";
       if (text.toLowerCase().includes("you're on the list") || text.toLowerCase().includes("thank") || text.toLowerCase().includes("success")) {
         observer.disconnect();
-        setTimeout(() => {
-          window.location.href = "https://vryfidvibes.com?ref=exchange";
-        }, 2000);
+        // Try to grab the email from the input field before it disappears
+        const emailInput = container.querySelector('input[type="email"]');
+        const email = signupEmailRef.current || emailInput?.value || "";
+        setTimeout(() => redirectToVibes(email), 2000);
       }
     });
     observer.observe(document.body, { childList: true, subtree: true, characterData: true });
