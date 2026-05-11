@@ -115,6 +115,19 @@ export default function App() {
   // Redirect to Vibes after waitlist signup — registered once, no deps
   const signupEmailRef = useRef(null);
 
+  // Continuously capture email from the input so we have it when the form disappears
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const container = document.getElementById("getWaitlistContainer");
+      if (!container) return;
+      const emailInput = container.querySelector('input[type="email"]');
+      if (emailInput?.value) {
+        signupEmailRef.current = emailInput.value;
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     function redirectToVibes(email) {
       const params = new URLSearchParams({ ref: "exchange" });
@@ -123,8 +136,7 @@ export default function App() {
     }
 
     function handleWaitlistSuccess(event) {
-      const email = event.detail?.email || "";
-      signupEmailRef.current = email;
+      const email = event.detail?.email || signupEmailRef.current || "";
       posthog?.capture("waitlist_signup_completed", {
         waitlist_id: "32776",
         email,
@@ -143,9 +155,7 @@ export default function App() {
       const text = container.innerText || "";
       if (text.toLowerCase().includes("you're on the list") || text.toLowerCase().includes("thank") || text.toLowerCase().includes("success")) {
         observer.disconnect();
-        // Try to grab the email from the input field before it disappears
-        const emailInput = container.querySelector('input[type="email"]');
-        const email = signupEmailRef.current || emailInput?.value || "";
+        const email = signupEmailRef.current || "";
         setTimeout(() => redirectToVibes(email), 2000);
       }
     });
