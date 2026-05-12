@@ -226,21 +226,6 @@ export default function App() {
           </section>
           </PostHogCaptureOnViewed>
 
-          {/* CTA */}
-          <ScrollReveal>
-            <div className="cta-wrapper">
-              <section className="cta-section">
-                <h2 className="cta-title">
-                  Sign up. Get verified once.
-                  <span className="accent"> Then approve the best ones and move forward with confidence.</span>
-                </h2>
-                <p className="cta-sub">
-                  No more endless searching. No more repeating yourself. No more wondering if a place is even worth the effort.
-                </p>
-              </section>
-            </div>
-          </ScrollReveal>
-
           {/* The Shift */}
           <ScrollReveal>
             <section className="shift-section">
@@ -249,6 +234,21 @@ export default function App() {
                 The VryfiExchange flips the process: landlords receive verified, qualified tenants first, then connect with the right ones to fill the property.
               </h2>
             </section>
+          </ScrollReveal>
+
+          {/* CTA */}
+          <ScrollReveal>
+            <div className="cta-wrapper">
+              <section className="cta-section">
+                <h2 className="cta-title">
+                  Renters sign up. Get verified once.
+                  <span className="accent"> Apartments will come to you. Then, you, the renter, approves the best ones.</span>
+                </h2>
+                <p className="cta-sub">
+                  No more endless searching. No more repeating yourself. No more wondering if a place is even worth the effort.
+                </p>
+              </section>
+            </div>
           </ScrollReveal>
 
           {/* Founders */}

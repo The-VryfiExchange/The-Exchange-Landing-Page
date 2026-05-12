@@ -316,6 +316,34 @@ h1 {
   color: var(--gold);
 }
 
+/* ---- How It Works ---- */
+.how-it-works-section {
+  max-width: 960px;
+  margin: 40px auto 40px;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.how-it-works-title {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+
+.how-it-works-title .accent {
+  display: inline;
+}
+
+.how-it-works-sub {
+  max-width: 640px;
+  margin: 18px auto 0;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
 /* ---- Founders ---- */
 .founders {
   max-width: 960px;
