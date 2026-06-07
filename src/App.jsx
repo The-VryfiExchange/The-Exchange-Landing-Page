@@ -564,7 +564,7 @@ function OperatorsView({ onJoinClick }) {
         </h1>
         <p className="lead">
           One operator dashboard for identity, income, history, and fit - plus direct access to a
-          verified renter pipeline through The Exchange.
+          verified renter pipeline through The Exchange. Fill units faster, cut costs, and grow your NOI.
         </p>
         <div className="hero-ctas">
           <a className="button" href="https://calendly.com/aiden-vryfid/30min" target="_blank" rel="noreferrer">Request early access</a>
