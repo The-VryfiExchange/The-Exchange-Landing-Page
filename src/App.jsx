@@ -561,7 +561,7 @@ function OperatorsView({ onJoinClick }) {
         </h1>
         <p className="lead">
           One operator dashboard for identity, income, history, and fit - plus direct access to a
-          verified renter pipeline through The Exchange. Drive 2% NOI uplift across your portfolio.
+          verified renter pipeline through The Exchange.
         </p>
         <div className="hero-ctas">
           <button className="button" onClick={onJoinClick}>Request early access</button>
@@ -618,36 +618,23 @@ function OperatorsView({ onJoinClick }) {
             Operators on VryfID get direct access to The Exchange - a marketplace of renters
             matched on fit (budget, move-in date, household, lease length) and qualification (verified
             income-to-rent, credit score, background). All sourced, matched, and ranked by AI agents.
+            The result: millions in NOI you're currently leaving on the table.
           </p>
-          <div className="stat-row">
-            <div className="big-stat">
-              <span className="big-stat-num">2%</span>
-              <span className="big-stat-label">NOI uplift driven by faster fills, higher occupancy, and lower operating costs</span>
-            </div>
-            <div className="big-stat">
-              <span className="big-stat-num">+1pp</span>
-              <span className="big-stat-label">Occupancy increase from filling structural vacancy and cutting days-on-market</span>
-            </div>
-            <div className="big-stat">
-              <span className="big-stat-num">4x</span>
-              <span className="big-stat-label">ROI on subscription - $4 of NOI created for every $1 spent</span>
-            </div>
-          </div>
           <div className="solution-cards">
             <FeatureCard
               icon="🛡"
-              title="Pre-screened pipeline"
-              body="Every lead arrives verified. Fill structural vacancy and lift occupancy by up to 1 percentage point."
+              title="Higher occupancy"
+              body="Fill units that sit vacant by matching them with verified, qualified renters who are ready to move. Every day a unit sits empty is lost rent."
             />
             <FeatureCard
               icon="⚡"
-              title="Faster fills"
-              body="Cut 10+ vacant days per turn. Faster turns are the single largest NOI lever, recovering lost rent every day a unit sits empty."
+              title="Faster turns"
+              body="Cut days-on-market by matching warm renters the moment a unit opens. Faster fills recover rent that would otherwise disappear."
             />
             <FeatureCard
               icon="💸"
               title="Lower operating costs"
-              body="Reduce ad spend, leasing labor, and concessions. One platform replaces a stack of vendor invoices."
+              body="Spend less on advertising, leasing labor, and concessions. One platform replaces a stack of vendors and manual work."
             />
           </div>
         </section>
