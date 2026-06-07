@@ -644,8 +644,8 @@ function OperatorsView({ onJoinClick }) {
         <div className="cta-wrapper">
           <section className="cta-section">
             <h2 className="cta-title">
-              Stop running a leasing funnel on email and PDFs.
-              <span className="accent"> Run it on VryfID.</span>
+              Every vacant day is lost rent. Every bad tenant is lost NOI.
+              <span className="accent"> The Exchange kills both.</span>
             </h2>
             <p className="cta-sub">Be one of the first operators inside the platform at launch.</p>
             <button className="button" onClick={onJoinClick}>Request early access →</button>
