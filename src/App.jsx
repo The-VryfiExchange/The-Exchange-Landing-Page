@@ -561,7 +561,7 @@ function OperatorsView({ onJoinClick }) {
         </h1>
         <p className="lead">
           One operator dashboard for identity, income, history, and fit - plus direct access to a
-          verified renter pipeline through The Exchange.
+          verified renter pipeline through The Exchange. Drive 2% NOI uplift across your portfolio.
         </p>
         <div className="hero-ctas">
           <button className="button" onClick={onJoinClick}>Request early access</button>
@@ -612,28 +612,42 @@ function OperatorsView({ onJoinClick }) {
 
       <ScrollReveal>
         <section className="section section--solution">
-          <span className="eyebrow gold">Plus: a verified renter pipeline</span>
+          <span className="eyebrow gold">Plus: a verified renter pipeline that drives NOI</span>
           <h2 className="section-title">Your dashboard is your door into The Exchange.</h2>
           <p className="section-lead">
             Operators on VryfID get direct access to The Exchange - a marketplace of renters
             matched on fit (budget, move-in date, household, lease length) and qualification (verified
             income-to-rent, credit score, background). All sourced, matched, and ranked by AI agents.
           </p>
+          <div className="stat-row">
+            <div className="big-stat">
+              <span className="big-stat-num">2%</span>
+              <span className="big-stat-label">NOI uplift driven by faster fills, higher occupancy, and lower operating costs</span>
+            </div>
+            <div className="big-stat">
+              <span className="big-stat-num">+1pp</span>
+              <span className="big-stat-label">Occupancy increase from filling structural vacancy and cutting days-on-market</span>
+            </div>
+            <div className="big-stat">
+              <span className="big-stat-num">4x</span>
+              <span className="big-stat-label">ROI on subscription - $4 of NOI created for every $1 spent</span>
+            </div>
+          </div>
           <div className="solution-cards">
             <FeatureCard
               icon="🛡"
               title="Pre-screened pipeline"
-              body="Every lead from The Exchange comes ID, income, and history verified - no surprises."
+              body="Every lead arrives verified. Fill structural vacancy and lift occupancy by up to 1 percentage point."
             />
             <FeatureCard
               icon="⚡"
               title="Faster fills"
-              body="Match warm renters the day a unit opens. Cut vacancy days, not standards."
+              body="Cut 10+ vacant days per turn. Faster turns are the single largest NOI lever, recovering lost rent every day a unit sits empty."
             />
             <FeatureCard
               icon="💸"
-              title="Lower screening costs"
-              body="One platform replaces a stack of vendor invoices for ID, income, and tenant checks."
+              title="Lower operating costs"
+              body="Reduce ad spend, leasing labor, and concessions. One platform replaces a stack of vendor invoices."
             />
           </div>
         </section>
