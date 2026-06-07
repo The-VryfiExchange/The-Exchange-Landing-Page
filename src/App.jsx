@@ -567,7 +567,7 @@ function OperatorsView({ onJoinClick }) {
           verified renter pipeline through The Exchange.
         </p>
         <div className="hero-ctas">
-          <button className="button" onClick={onJoinClick}>Request early access</button>
+          <a className="button" href="https://calendly.com/aiden-vryfid/30min" target="_blank" rel="noreferrer">Request early access</a>
         </div>
       </section>
 
@@ -651,7 +651,7 @@ function OperatorsView({ onJoinClick }) {
               <span className="accent"> driving NOI growth by millions.</span>
             </h2>
             <p className="cta-sub">Be one of the first operators inside the platform at launch.</p>
-            <button className="button" onClick={onJoinClick}>Request early access →</button>
+            <a className="button" href="https://calendly.com/aiden-vryfid/30min" target="_blank" rel="noreferrer">Request early access →</a>
           </section>
         </div>
       </ScrollReveal>
