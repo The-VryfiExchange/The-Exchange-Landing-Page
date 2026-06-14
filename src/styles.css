@@ -912,7 +912,6 @@ h1 {
     grid-template-columns: 1fr;
   }
   .dashboard-layout--reverse .vault-mock { order: 2; }
-  .tabnav { order: 3; width: 100%; justify-content: center; overflow-x: auto; }
 }
 
 @media (max-width: 600px) {
