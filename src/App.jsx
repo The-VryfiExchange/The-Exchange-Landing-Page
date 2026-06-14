@@ -359,6 +359,16 @@ function ExchangeView({ posthog, onJoinClick }) {
         </section>
       </PostHogCaptureOnViewed>
 
+      {/* The shift */}
+      <ScrollReveal>
+        <section className="shift-section">
+          <p className="eyebrow mint">The shift</p>
+          <h2 className="shift-title">
+            The VryfiExchange flips the process: landlords receive verified, qualified tenants first, then connect with the right ones to fill the property.
+          </h2>
+        </section>
+      </ScrollReveal>
+
       {/* Problem */}
       <ScrollReveal>
         <section className="section section--problem">
@@ -386,16 +396,6 @@ function ExchangeView({ posthog, onJoinClick }) {
               body="Re-uploading the same IDs, paystubs, and references for every single listing."
             />
           </div>
-        </section>
-      </ScrollReveal>
-
-      {/* The shift */}
-      <ScrollReveal>
-        <section className="shift-section">
-          <p className="eyebrow mint">The shift</p>
-          <h2 className="shift-title">
-            The VryfiExchange flips the process: landlords receive verified, qualified tenants first, then connect with the right ones to fill the property.
-          </h2>
         </section>
       </ScrollReveal>
 

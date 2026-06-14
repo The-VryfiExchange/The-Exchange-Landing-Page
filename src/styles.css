@@ -66,7 +66,6 @@ a { color: inherit; text-decoration: none; }
 
 .tab-content {
   animation: tabFade 0.45s ease both;
-  padding-top: 56px;
 }
 @keyframes tabFade {
   from { opacity: 0; transform: translateY(8px); }
@@ -80,6 +79,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 18px;
   padding: 12px 32px;
+  padding-top: 60px;
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
   position: sticky;
@@ -924,9 +924,10 @@ h1 {
   .dashboard-stats { grid-template-columns: 1fr; }
   .dashboard-row { grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px; }
   .dashboard-row--head { display: none; }
-  .topbar { gap: 12px; }
+  .topbar { gap: 12px; padding-top: 52px; padding-left: 16px; padding-right: 16px; }
   .topbar .button--header { margin-left: auto; }
-  .tabnav-btn { padding: 8px 12px; font-size: 12px; }
+  .tabnav { top: 10px; padding: 3px; gap: 1px; }
+  .tabnav-btn { padding: 6px 10px; font-size: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
