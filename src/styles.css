@@ -925,8 +925,8 @@ h1 {
   .dashboard-row--head { display: none; }
   .topbar { gap: 12px; padding-top: 52px; padding-left: 16px; padding-right: 16px; }
   .topbar .button--header { margin-left: auto; }
-  .tabnav { top: 10px; padding: 3px; gap: 1px; }
-  .tabnav-btn { padding: 6px 10px; font-size: 11px; }
+  .tabnav { top: 10px; padding: 4px; gap: 2px; }
+  .tabnav-btn { padding: 8px 14px; font-size: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
